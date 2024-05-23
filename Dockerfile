@@ -25,9 +25,12 @@ RUN echo '[Desktop Entry]\nVersion=1.0\nName=Google Chrome\nExec=/usr/bin/google
 
 ######### Install Visual Studio Code ###########
 # Download Visual Studio Code
-RUN wget -q https://code.visualstudio.com/sha/download?build=stable&os=linux-x64 -O code.deb
-RUN dpkg -i code.deb; apt-get -fy install
-RUN rm code.deb
+RUN sudo apt install software-properties-common apt-transport-https wget
+RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+RUN apt-get update
+RUN apt-get install code
+# Clean up
 # Shortcut for vscode on desktop
 RUN echo '[Desktop Entry]\nName=Visual Studio Code\nComment=Code Editing. Redefined.\nExec=/usr/bin/code --unity-launch %F\nIcon=code\nType=Application\nStartupNotify=false\nStartupWMClass=Code\nCategories=Utility;TextEditor;Development;IDE;\nMimeType=text/plain;inode/directory;\nActions=new-empty-window;\nKeywords=vscode;' > /usr/share/applications/vscode.desktop
 
