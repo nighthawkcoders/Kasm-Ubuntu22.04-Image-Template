@@ -22,7 +22,8 @@ ENV DEBUG=false \
                   /ubuntu/install/slack/install_slack.sh \
                   /ubuntu/install/vs_code/install_vs_code.sh \
                   /ubuntu/install/postman/install_postman.sh \
-                  /ubuntu/install/cleanup/cleanup.sh"
+                  /ubuntu/install/cleanup/cleanup.sh \ 
+                  /ubuntu/install/github/install_github.sh"
 
 # Copy install scripts
 COPY ./src/ $INST_DIR
