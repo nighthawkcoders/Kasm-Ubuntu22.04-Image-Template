@@ -46,7 +46,7 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-toolsai.jupyter-keymap \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.vscode-pylance \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
-  && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor \
+  && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
 
 ########## End Customizations ###########
 
