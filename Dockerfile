@@ -34,6 +34,22 @@ RUN \
   rm -f /etc/X11/xinit/Xclients && \
   rm -Rf ${INST_DIR}
 
+# post install scripts
+RUN echo "Running VSCode extension install scripts"
+RUN code --install-extension github.vscode-github-actions \
+    code --install-extension ms-python.python \
+    code --install-extension ms-azuretools.vscode-docker \
+    code --install-extension ms-vscode-remote.remote-containers \
+    code --install-extension VisualStudioExptTeam.vscodeintellicode \
+    code --install-extension ms-toolsai.jupyter \
+    code --install-extension ms-toolsai.vscode-jupyter-cell-tags \
+    code --install-extension ms-toolsai.jupyter-keymap \
+    code --install-extension ms-python.vscode-pylance \
+    code --install-extension ms-python.debugpy \
+    code --install-extension yy0931.vscode-sqlite3-editor \
+    code --install-extension alexcvzz.vscode-sqlite \
+    code --install-extension eamodio.gitlens
+
 ########## End Customizations ###########
 
 RUN chown 1000:0 $HOME

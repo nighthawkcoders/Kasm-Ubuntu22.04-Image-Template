@@ -13,21 +13,6 @@ chmod +x $HOME/Desktop/code.desktop
 chown 1000:1000 $HOME/Desktop/code.desktop
 rm vs_code.deb
 
-## install custom extensions to vscode
-code --install-extension github.vscode-github-actions
-code --install-extension ms-python.python
-code --install-extension ms-azuretools.vscode-docker
-code --install-extension ms-vscode-remote.remote-containers
-code --install-extension VisualStudioExptTeam.vscodeintellicode
-code --install-extension ms-toolsai.jupyter
-code --install-extension ms-toolsai.vscode-jupyter-cell-tags
-code --install-extension ms-toolsai.jupyter-keymap
-code --install-extension ms-python.vscode-pylance
-code --install-extension ms-python.debugpy
-code --install-extension yy0931.vscode-sqlite3-editor
-code --install-extension alexcvzz.vscode-sqlite
-code --install-extension eamodio.gitlens
-
 
 # Conveniences for python development
 apt-get update
