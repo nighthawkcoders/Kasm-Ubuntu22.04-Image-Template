@@ -65,6 +65,9 @@ RUN sudo apt-get update
 
 
 RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+RUN echo "alias code='code --no-sandbox'" >> ~/.bashrc
+RUN source ~/.bashrc
 ########## End Customizations ###########
 
 RUN chown 1000:0 $HOME
