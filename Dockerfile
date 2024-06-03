@@ -22,8 +22,7 @@ ENV DEBUG=false \
                   /ubuntu/install/slack/install_slack.sh \
                   /ubuntu/install/vs_code/install_vs_code.sh \
                   /ubuntu/install/postman/install_postman.sh \
-                  /ubuntu/install/cleanup/cleanup.sh \
-                  /ubuntu/install/docker/install_docker.sh"
+                  /ubuntu/install/cleanup/cleanup.sh"
 
 # Copy install scripts
 COPY ./src/ $INST_DIR
@@ -48,6 +47,25 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.vscode-pylance \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
+
+# install docker for ubuntu
+RUN sudo apt-get update \
+  && sudo apt-get update \
+  && sudo apt-get install ca-certificates curl \
+  && sudo install -m 0755 -d /etc/apt/keyrings \
+  && sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
+  && sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN sudo apt-get update
+
+
+RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 
 
 ########## End Customizations ###########
