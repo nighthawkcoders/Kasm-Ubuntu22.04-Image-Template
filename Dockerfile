@@ -64,10 +64,7 @@ RUN echo \
 RUN sudo apt-get update
 
 
-RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
-
+RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 ########## End Customizations ###########
 
 RUN chown 1000:0 $HOME
