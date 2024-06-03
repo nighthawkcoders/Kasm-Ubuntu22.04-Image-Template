@@ -22,7 +22,8 @@ ENV DEBUG=false \
                   /ubuntu/install/slack/install_slack.sh \
                   /ubuntu/install/vs_code/install_vs_code.sh \
                   /ubuntu/install/postman/install_postman.sh \
-                  /ubuntu/install/cleanup/cleanup.sh"
+                  /ubuntu/install/cleanup/cleanup.sh \
+                  /ubuntu/install/docker/install_docker.sh"
 
 # Copy install scripts
 COPY ./src/ $INST_DIR
@@ -47,6 +48,7 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.vscode-pylance \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
+
 
 ########## End Customizations ###########
 
