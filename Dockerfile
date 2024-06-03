@@ -65,6 +65,11 @@ RUN sudo apt-get update
 
 
 RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+RUN sudo rm /home/kasm-default-profile/Desktop/org.remmina.Remmina.desktop \
+  && sudo rm /home/kasm-default-profile/Desktop/onlyoffice-desktopeditors.desktop \
+  && sudo rm /kasm-default-profile/Desktop/sublime_text.desktop \
+  && sudo rm /home/kasm-default-profile/Desktop/telegram.desktop
 ########## End Customizations ###########
 
 RUN chown 1000:0 $HOME
