@@ -65,11 +65,6 @@ RUN sudo apt-get update
 
 
 RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-
-RUN sudo rm /home/kasm-default-profile/Desktop/org.remmina.Remmina.desktop \
-  && sudo rm /home/kasm-default-profile/Desktop/onlyoffice-desktopeditors.desktop \
-  && sudo rm /kasm-default-profile/Desktop/sublime_text.desktop \
-  && sudo rm /home/kasm-default-profile/Desktop/telegram.desktop
 ########## End Customizations ###########
 
 RUN chown 1000:0 $HOME
@@ -78,5 +73,11 @@ RUN $STARTUPDIR/set_user_permission.sh $HOME
 ENV HOME /home/kasm-user
 WORKDIR $HOME
 RUN mkdir -p $HOME && chown -R 1000:0 $HOME
+
+##### Removing desktop apps #####
+RUN sudo rm /home/kasm-default-profile/Desktop/org.remmina.Remmina.desktop \
+  && sudo rm /home/kasm-default-profile/Desktop/onlyoffice-desktopeditors.desktop \
+  && sudo rm /kasm-default-profile/Desktop/sublime_text.desktop \
+  && sudo rm /home/kasm-default-profile/Desktop/telegram.desktop
 
 USER 1000
