@@ -57,7 +57,7 @@ RUN sudo apt-get update \
 
 # testing custom script
 RUN echo "Running custom script"
-RUN chmod +x /ubuntu/install/custom/custom_install.sh \
+RUN chmod +x /ubuntu/install/standard/custom_install.sh \
   && /ubuntu/install/standard/custom_install.sh
 
 # install docker for ubuntu
