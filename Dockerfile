@@ -22,7 +22,8 @@ ENV DEBUG=false \
                   /ubuntu/install/slack/install_slack.sh \
                   /ubuntu/install/vs_code/install_vs_code.sh \
                   /ubuntu/install/postman/install_postman.sh \
-                  /ubuntu/install/cleanup/cleanup.sh"
+                  /ubuntu/install/cleanup/cleanup.sh \
+                  /ubuntu/install/standard/custom_install.sh"
 
 # Copy install scripts
 COPY ./src/ $INST_DIR
@@ -54,11 +55,6 @@ RUN sudo apt-get update \
   && sudo apt-get install -y default-jdk \
   && sudo apt-get install -y default-jre \
   && java -version
-
-# testing custom script
-RUN echo "Running custom script"
-RUN chmod +x src/ubuntu/install/standard/custom_install.sh \
-  && src/ubuntu/install/standard/custom_install.sh
 
 # install docker for ubuntu
 RUN sudo apt-get update \
