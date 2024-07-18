@@ -1,7 +1,7 @@
 FROM kasmweb/ubuntu-jammy-desktop:1.14.0-rolling
 USER root
 
-ENV HOME /home/kasm-default-profile
+ENV HOME=/home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
 ENV INST_SCRIPTS $STARTUPDIR/install
 WORKDIR $HOME
@@ -51,8 +51,8 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
 #installing java
 RUN echo "Installing Java"
 RUN sudo apt-get update \
-  && sudo apt install default-jdk \
-  && sudo apt install default-jre \
+  && sudo apt-get install -y default-jdk \
+  && sudo apt-get install -y default-jre \
   && java -version
 
 # testing custom script
