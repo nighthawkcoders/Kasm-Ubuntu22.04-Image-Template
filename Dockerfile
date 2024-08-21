@@ -49,6 +49,9 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
 
+# change defualt password for users to 123Qwerty!
+RUN echo 'kasm-user:123Qwerty!' | chpasswd
+
 #installing java
 RUN echo "Installing Java"
 RUN sudo apt-get update \
