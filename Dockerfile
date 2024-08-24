@@ -50,15 +50,6 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
 
 
-# Installing Java
-RUN echo "Installing Java" \
-  && apt-get update \
-  && apt-get install -y default-jdk default-jre \
-  && java -version
-
-# Set the default command to print Java version and start a bash shell
-CMD java -version && /bin/bash
-
 # install docker for ubuntu
 RUN sudo apt-get update \
   && sudo apt-get update \
