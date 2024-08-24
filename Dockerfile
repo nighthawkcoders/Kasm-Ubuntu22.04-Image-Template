@@ -49,15 +49,15 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
 
-# change defualt password for users to 123Qwerty!
-RUN echo 'kasm-user:123Qwerty!' | chpasswd
 
-#installing java
-RUN echo "Installing Java"
-RUN sudo apt-get update \
-  && sudo apt-get install -y default-jdk \
-  && sudo apt-get install -y default-jre \
+# Installing Java
+RUN echo "Installing Java" \
+  && apt-get update \
+  && apt-get install -y default-jdk default-jre \
   && java -version
+
+# Set the default command to print Java version and start a bash shell
+CMD java -version && /bin/bash
 
 # install docker for ubuntu
 RUN sudo apt-get update \
