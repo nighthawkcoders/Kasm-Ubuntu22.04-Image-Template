@@ -49,12 +49,6 @@ RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.v
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
 
-#installing java
-RUN echo "Installing Java"
-RUN sudo apt-get update \
-  && sudo apt-get install -y default-jdk \
-  && sudo apt-get install -y default-jre \
-  && java -version
 
 # install docker for ubuntu
 RUN sudo apt-get update \
