@@ -15,11 +15,7 @@ apt-get install -y \
     python-is-python3 \
     default-jdk \
     default-jre 
-
-    java -version && /bin/bash
-
-    java -version
-
+    
 # Cleanup
 if [ -z ${SKIP_CLEAN+x} ]; then
     apt-get autoclean
