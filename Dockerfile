@@ -18,12 +18,10 @@ ENV DEBUG=false \
     INST_SCRIPTS="/ubuntu/install/tools/install_tools.sh \
                   /ubuntu/install/chrome/install_chrome.sh \
                   /ubuntu/install/chromium/install_chromium.sh \
-                  /ubuntu/install/sublime_text/install_sublime_text.sh \
                   /ubuntu/install/slack/install_slack.sh \
                   /ubuntu/install/vs_code/install_vs_code.sh \
                   /ubuntu/install/postman/install_postman.sh \
-                  /ubuntu/install/cleanup/cleanup.sh \
-                  /ubuntu/install/standard/custom_install.sh"
+                  /ubuntu/install/cleanup/cleanup.sh"
 
 # Copy install scripts
 COPY ./src/ $INST_DIR
@@ -35,7 +33,7 @@ RUN \
   rm -f /etc/X11/xinit/Xclients && \
   rm -Rf ${INST_DIR}
 
-# post install scripts
+# post install scripts:
 RUN echo "Running VSCode extension install scripts"
 RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.vscode-github-actions \
   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.python \
@@ -65,9 +63,10 @@ RUN echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 RUN sudo apt-get update
 
-
+# Installing Docker Stuff
 RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+# Setting code . to work for VSCode
 RUN echo "alias code='code --no-sandbox'" >> ~/.bashrc
 RUN . ~/.bashrc
 

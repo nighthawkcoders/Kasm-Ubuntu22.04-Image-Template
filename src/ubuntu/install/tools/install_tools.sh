@@ -13,8 +13,8 @@ apt-get install -y \
     python3 \
     python3-pip \
     python-is-python3 \
-    default-jdk \
-    default-jre-headless
+    default-jre-headless \
+    git
     
 # Cleanup
 if [ -z ${SKIP_CLEAN+x} ]; then
