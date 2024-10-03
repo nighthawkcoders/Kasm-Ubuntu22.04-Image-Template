@@ -1,59 +1,93 @@
-ARG BASE_TAG="develop"
-ARG BASE_IMAGE="core-ubuntu-jammy"
-FROM kasmweb/$BASE_IMAGE:$BASE_TAG
-
+FROM kasmweb/ubuntu-jammy-desktop:1.14.0-rolling
 USER root
 
-ENV HOME /home/kasm-default-profile
+ENV HOME=/home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
+ENV INST_SCRIPTS $STARTUPDIR/install
 WORKDIR $HOME
 
-### Envrionment config
-ENV DEBIAN_FRONTEND=noninteractive \
-    SKIP_CLEAN=true \
-    KASM_RX_HOME=$STARTUPDIR/kasmrx \
-    DONT_PROMPT_WSL_INSTALL="No_Prompt_please" \
-    INST_DIR=$STARTUPDIR/install \
-    INST_SCRIPTS="/ubuntu/install/tools/install_tools_deluxe.sh \
-                  /ubuntu/install/misc/install_tools.sh \
-                  /ubuntu/install/chrome/install_chrome.sh \
-                  /ubuntu/install/chromium/install_chromium.sh \
-                  /ubuntu/install/firefox/install_firefox.sh \
-                  /ubuntu/install/sublime_text/install_sublime_text.sh \
-                  /ubuntu/install/vs_code/install_vs_code.sh \
-                  /ubuntu/install/nextcloud/install_nextcloud.sh \
-                  /ubuntu/install/remmina/install_remmina.sh \
-                  /ubuntu/install/only_office/install_only_office.sh \
-                  /ubuntu/install/signal/install_signal.sh \
-                  /ubuntu/install/gimp/install_gimp.sh \
-                  /ubuntu/install/zoom/install_zoom.sh \
-                  /ubuntu/install/obs/install_obs.sh \
-                  /ubuntu/install/ansible/install_ansible.sh \
-                  /ubuntu/install/terraform/install_terraform.sh \
-                  /ubuntu/install/telegram/install_telegram.sh \
-                  /ubuntu/install/thunderbird/install_thunderbird.sh \
-                  /ubuntu/install/slack/install_slack.sh \
-                  /ubuntu/install/gamepad_utils/install_gamepad_utils.sh \
-                  /ubuntu/install/cleanup/cleanup.sh"
+######### Customize Container Here ###########
 
-# Copy install scripts
-COPY ./src/ $INST_DIR
+# ### Envrionment config
+# ENV DEBUG=false \
+#     DEBIAN_FRONTEND=noninteractive \
+#     SKIP_CLEAN=true \
+#     KASM_RX_HOME=$STARTUPDIR/kasmrx \
+#     DONT_PROMPT_WSL_INSTALL="No_Prompt_please" \
+#     INST_DIR=$STARTUPDIR/install \
+#     INST_SCRIPTS="/ubuntu/install/tools/install_tools.sh \
+#                   /ubuntu/install/chrome/install_chrome.sh \
+#                   /ubuntu/install/chromium/install_chromium.sh \
+#                   /ubuntu/install/sublime_text/install_sublime_text.sh \
+#                   /ubuntu/install/slack/install_slack.sh \
+#                   /ubuntu/install/vs_code/install_vs_code.sh \
+#                   /ubuntu/install/postman/install_postman.sh \
+#                   /ubuntu/install/cleanup/cleanup.sh \
+#                   /ubuntu/install/standard/custom_install.sh"
 
-# Run installations
-RUN \
-  for SCRIPT in $INST_SCRIPTS; do \
-    bash ${INST_DIR}${SCRIPT} || exit 1; \
-  done && \
-  $STARTUPDIR/set_user_permission.sh $HOME && \
-  rm -f /etc/X11/xinit/Xclients && \
-  chown 1000:0 $HOME && \
-  mkdir -p /home/kasm-user && \
-  chown -R 1000:0 /home/kasm-user && \
-  rm -Rf ${INST_DIR}
+# # Copy install scripts
+# COPY ./src/ $INST_DIR
+# # Run installations
+# RUN \
+#   for SCRIPT in $INST_SCRIPTS; do \
+#     bash ${INST_DIR}${SCRIPT}; \
+#   done && \
+#   rm -f /etc/X11/xinit/Xclients && \
+#   rm -Rf ${INST_DIR}
 
-# Userspace Runtime
+# # post install scripts
+# RUN echo "Running VSCode extension install scripts"
+# RUN code --user-data-dir /root/.vscode --no-sandbox --install-extension github.vscode-github-actions \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.python \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-azuretools.vscode-docker \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-vscode-remote.remote-containers \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension VisualStudioExptTeam.vscodeintellicode \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-toolsai.jupyter \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-toolsai.vscode-jupyter-cell-tags \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-toolsai.jupyter-keymap \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.vscode-pylance \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension ms-python.debugpy \
+#   && code --user-data-dir /root/.vscode --no-sandbox --install-extension yy0931.vscode-sqlite3-editor
+
+# # change defualt password for users to 123Qwerty!
+# RUN echo 'kasm-user:123Qwerty!' | chpasswd
+
+# #installing java
+# RUN echo "Installing Java"
+# RUN sudo apt-get update \
+#   && sudo apt-get install -y default-jdk \
+#   && sudo apt-get install -y default-jre \
+#   && java -version
+
+# # install docker for ubuntu
+# RUN sudo apt-get update \
+#   && sudo apt-get update \
+#   && sudo apt-get install ca-certificates curl \
+#   && sudo install -m 0755 -d /etc/apt/keyrings \
+#   && sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
+#   && sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# # Add the repository to Apt sources:
+# RUN echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# RUN sudo apt-get update
+
+
+# RUN sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+# RUN echo "alias code='code --no-sandbox'" >> ~/.bashrc
+# RUN . ~/.bashrc
+
+########## End Customizations ###########
+
+RUN chown 1000:0 $HOME
+RUN $STARTUPDIR/set_user_permission.sh $HOME
+
 ENV HOME /home/kasm-user
 WORKDIR $HOME
-USER 1000
+RUN mkdir -p $HOME && chown -R 1000:0 $HOME
 
-CMD ["--tail-log"]
+
+USER 1000
