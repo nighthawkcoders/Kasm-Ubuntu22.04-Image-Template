@@ -12,10 +12,8 @@ apt-get install -y \
     sqlite3 \
     python3 \
     python3-pip \
-    python-is-python3 \
-    default-jdk \
-    default-jre-headless
-    
+    python-is-python3
+
 # Cleanup
 if [ -z ${SKIP_CLEAN+x} ]; then
     apt-get autoclean
